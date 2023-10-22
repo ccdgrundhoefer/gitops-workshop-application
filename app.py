@@ -11,14 +11,13 @@ def request_url():
     
     try:
         response = requests.get(url)
-        # Hier kannst du den Statuscode oder andere Informationen aus der Antwort überprüfen
         print(f"Statuscode: {response.status_code}")
     except Exception as e:
         print(f"Fehler beim Aufrufen der URL: {e}")
 
 def main():
     # Intervall in Sekunden, wie oft die URL aufgerufen werden soll
-    interval = 60  # Zum Beispiel alle 60 Sekunden
+    interval = 1  # Zum Beispiel alle 60 Sekunden
     
     while True:
         request_url()
