@@ -5,18 +5,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// MyData ist ein Beispiel für eine Struktur, die im HTML-Rendering verwendet wird.
-type MyData struct {
-	Title string
-}
-
 // HandleHomePage ist für den Endpunkt der Startseite verantwortlich.
 func HandleHomePage(c *gin.Context) {
-	data := &MyData{
+	if c == nil {
+		// Handle den Fall, wenn der Context nil ist
+		// z.B.: Rückgabe einer Fehlermeldung oder Beenden der Funktion
+		return
+	}
+
+	data := struct {
+		Title string
+	}{
 		Title: "Meine Webseite",
 	}
 
-	c.HTML(200, "index.html", gin.H{
+	c.HTML(200, "./static/index.html", gin.H{
 		"data": data,
 	})
 }
