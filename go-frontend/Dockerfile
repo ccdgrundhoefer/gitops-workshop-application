@@ -3,7 +3,6 @@ FROM registry.access.redhat.com/ubi8/go-toolset:latest as builder
 
 COPY cmd/ cmd/
 COPY internal/ internal/
-COPY static/ static/
 
 RUN go mod init frontend && \
     go mod tidy -e && \
@@ -16,6 +15,7 @@ WORKDIR /app
 
 # Kopiere die kompilierte Binärdatei aus der Build-Stage
 COPY --from=builder /opt/app-root/src/main .
+COPY static/ static/
 
 # Exponiere den Port, auf dem die Anwendung läuft
 EXPOSE 8080
