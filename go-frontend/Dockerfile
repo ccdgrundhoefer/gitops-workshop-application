@@ -1,23 +1,20 @@
 # Stage 1: Build-Stage
-FROM docker.io/golang:1.21.4-alpine AS builder
+FROM registry.access.redhat.com/ubi8/go-toolset:latest as builder
 
 WORKDIR /app
 
-# Kopiere go.mod und go.sum in den Arbeitsverzeichnis
-COPY go.mod .
-COPY go.sum .
-
-# Führe `go mod download` aus, um die Abhängigkeiten zu laden
-RUN go mod download
-
 # Kopiere den Rest des Codes in das Arbeitsverzeichnis
-COPY . .
+COPY cmd/ cmd/
+COPY internal/ internal/
+COPY static/ static/
 
 # Baue das Go-Anwendungsprogramm
-RUN go build -o main ./cmd/frontend
+RUN go mod init go-frontend && \
+    go mod tidy && \
+    go build -o main ./cmd/frontend
 
 # Stage 2: Production-Stage
-FROM docker.io/alpine:latest
+FROM registry.access.redhat.com/ubi8/ubi-micro:latest
 
 WORKDIR /app
 
