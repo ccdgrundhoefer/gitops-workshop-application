@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/python-39:1-154 as builder
+FROM registry.access.redhat.com/ubi8/python-39:1-154
 
 COPY requirements.txt .
 
